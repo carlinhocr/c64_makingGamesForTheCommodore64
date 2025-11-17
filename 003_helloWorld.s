@@ -11,8 +11,22 @@
 	.importzp	tmp1, tmp2, tmp3, tmp4, ptr1, ptr2, ptr3, ptr4
 	.macpack	longbranch
 	.forceimport	__STARTUP__
+	.import		_puts
 	.import		_clrscr
+	.import		_cgetc
+	.import		_textcolor
+	.import		_bgcolor
+	.import		_bordercolor
+	.import		_chline
 	.export		_main
+
+.segment	"RODATA"
+
+S0104:
+	.byte	$C5,$53,$54,$4F,$20,$45,$53,$54,$41,$20,$45,$4E,$20,$41,$4D,$41
+	.byte	$52,$49,$4C,$4C,$4F,$0D,$00
+S0103:
+	.byte	$C8,$4F,$4C,$41,$20,$CD,$55,$4E,$44,$4F,$0D,$00
 
 ; ---------------------------------------------------------------
 ; void __near__ main (void)
@@ -24,7 +38,26 @@
 
 .segment	"CODE"
 
-	jmp     _clrscr
+	jsr     _clrscr
+	lda     #<(S0103)
+	ldx     #>(S0103)
+	jsr     _puts
+	lda     #$0C
+	jsr     _chline
+	lda     #$0E
+	jsr     _bordercolor
+	lda     #$05
+	jsr     _bgcolor
+	lda     #$0E
+	sta     $D020
+	lda     #$05
+	sta     $D021
+	lda     #$07
+	jsr     _textcolor
+	lda     #<(S0104)
+	ldx     #>(S0104)
+	jsr     _puts
+	jmp     _cgetc
 
 .endproc
 
