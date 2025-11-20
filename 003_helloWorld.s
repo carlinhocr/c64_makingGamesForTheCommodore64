@@ -13,6 +13,7 @@
 	.forceimport	__STARTUP__
 	.import		_puts
 	.import		_clrscr
+	.import		_gotoxy
 	.import		_cgetc
 	.import		_textcolor
 	.import		_bgcolor
@@ -54,6 +55,10 @@ S0103:
 	sta     $D021
 	lda     #$07
 	jsr     _textcolor
+	lda     #$0E
+	jsr     pusha
+	lda     #$0C
+	jsr     _gotoxy
 	lda     #<(S0104)
 	ldx     #>(S0104)
 	jsr     _puts

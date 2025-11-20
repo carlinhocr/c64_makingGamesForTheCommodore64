@@ -15,6 +15,7 @@ void main(void) {
     VIC.bordercolor = COLOR_LIGHTBLUE;
     VIC.bgcolor[0]=COLOR_GREEN;
     textcolor(COLOR_YELLOW);
+    gotoxy(14,12);
     puts("Esto esta en amarillo\n");
     //wait for keypress
     cgetc();
